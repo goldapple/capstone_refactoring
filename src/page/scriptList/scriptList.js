@@ -42,19 +42,19 @@ class ScriptList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  active_speakerSelect = (index) => {
+  ActiveRoleSelectState = (index) => {
     document.getElementsByClassName("speakerSelectOption")[
       index
     ].style.display = "block";
   };
-  nonActive_speakerSelect = (index) => {
+  InactiveRoleSelectState = (index) => {
     console.log(index);
     document.getElementsByClassName("speakerSelectOption")[
       index
     ].style.display = "none";
   };
   //대본 저장
-  save_option = (index, arr) => {
+  SaveRole = (index, arr) => {
     if (arr.speakerIndex.indexOf("") == -1) {
       //만약 공백이 없다면
       Axios({
@@ -84,8 +84,8 @@ class ScriptList extends Component {
             speaker={this.state.speaker}
             key={i}
             index={i}
-            nonActive_speakerSelect={this.nonActive_speakerSelect}
-            save_option={this.save_option}
+            InactiveRoleSelectState={this.InactiveRoleSelectState}
+            SaveRole={this.SaveRole}
           />
         ))}
 
@@ -100,7 +100,7 @@ class ScriptList extends Component {
             {this.state.script.map((index, i, key) => (
               <div
                 className="each_script"
-                onClick={() => this.active_speakerSelect(i)}
+                onClick={() => this.ActiveRoleSelectState(i)}
                 key={i}
               >
                 {index}

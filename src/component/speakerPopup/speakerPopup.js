@@ -18,11 +18,11 @@ class SpeakerPopup extends Component {
       }
     }
   }
-  onChangeUrl = (e) => {
+  ChangeUrl = (e) => {
     this.setState({ url: e.target.value });
   };
 
-  spaekerCheck = (e) => {
+  CheckSpeakerState = (e) => {
     Axios({
       url: `${API()}/speakerConnect`,
       method: "post",
@@ -48,7 +48,7 @@ class SpeakerPopup extends Component {
           <input
             className="dnsBlock"
             placeholder="DNS 입력칸"
-            onChange={this.onChangeUrl}
+            onChange={this.ChangeUrl}
             defaultValue={
               this.props.length > this.props.index
                 ? this.props.defaultIp[this.props.index]
@@ -57,13 +57,13 @@ class SpeakerPopup extends Component {
           />
           <div className="settingRoll">기본 역할 설정</div>
         </div>
-        <button className="connectCheck" onClick={this.spaekerCheck}>
+        <button className="connectCheck" onClick={this.CheckSpeakerState}>
           연결확인
         </button>
         <button
           className="discardButton"
           onClick={() =>
-            this.props.deleteSpeaker(this.props.index, this.state.url)
+            this.props.DeleteSpeakerInputBlock(this.props.index, this.state.url)
           }
         >
           삭제

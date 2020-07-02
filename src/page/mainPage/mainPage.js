@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Axios from "axios";
 import { API } from "../index";
 class MainPage extends Component {
-  speakerKill = () => {
+  killSpeaker = () => {
     console.log("스피커 사망 명령");
     Axios({
       url: `${API()}/speakerKill`,
@@ -21,7 +21,7 @@ class MainPage extends Component {
       <div className="mainPage">
         <div className="centerContainer">
           <div className="title">
-            <div className="text" onClick={this.speakerKill}>
+            <div className="text" onClick={this.killSpeaker}>
               {" "}
               너는 나의 친구
             </div>

@@ -57,18 +57,18 @@ class ScriptSave extends Component {
       })
       .catch((err) => console.log(err));
   };
-  active_speakerSelect = (index) => {
+  ActiveRoleSelectState = (index) => {
     document.getElementsByClassName("speakerSelectOption")[
       index
     ].style.display = "block";
   };
-  nonActive_speakerSelect = (index) => {
+  InactiveRoleSelectState = (index) => {
     document.getElementsByClassName("speakerSelectOption")[
       index
     ].style.display = "none";
   };
 
-  save_option = (index, arr) => {
+  SaveRole = (index, arr) => {
     console.log(index, arr);
     console.log();
     if (arr.speakerIndex.indexOf("") == -1) {
@@ -90,8 +90,7 @@ class ScriptSave extends Component {
       alert("모든 역할에 대해 설정해 주셔야 합니다.");
     }
   };
-  switchCheckedBox = (index) => {
-    console.log(this.state.allScript);
+  ChangeScriptCheckState = (index) => {
     var scriptIndex = 0;
     for (let id = 0; id < this.state.allScript.length; id++) {
       if (index == this.state.allScript[id].title) {
@@ -102,8 +101,9 @@ class ScriptSave extends Component {
     let temp = this.state.checkedBox;
     temp[scriptIndex] = !temp[scriptIndex];
     this.setState({ checkedBox: temp });
+    console.log(this.state.checkedBox);
   };
-  delete_script = () => {
+  DeleteScript = () => {
     Axios({
       url: `${API()}/scriptListDelete`,
       method: "delete",
@@ -124,8 +124,8 @@ class ScriptSave extends Component {
             speaker={this.state.speaker}
             key={i}
             index={i}
-            nonActive_speakerSelect={this.nonActive_speakerSelect}
-            save_option={this.save_option}
+            InactiveRoleSelectState={this.InactiveRoleSelectState}
+            SaveRole={this.SaveRole}
           />
         ))}
 
@@ -144,7 +144,7 @@ class ScriptSave extends Component {
               {this.state.script.map((index, i, key) => (
                 <div
                   className="each_script"
-                  onDoubleClick={() => this.active_speakerSelect(i)}
+                  onDoubleClick={() => this.ActiveRoleSelectState(i)}
                   key={i}
                   index={i}
                 >
@@ -152,7 +152,7 @@ class ScriptSave extends Component {
                     type="checkbox"
                     name={index}
                     value={index}
-                    onClick={() => this.switchCheckedBox(index)}
+                    onClick={() => this.ChangeScriptCheckState(index)}
                   />
                   {index}
                 </div>
@@ -168,7 +168,7 @@ class ScriptSave extends Component {
               <button
                 type="button"
                 className="bottomDiv"
-                onClick={this.delete_script}
+                onClick={this.DeleteScript}
               >
                 대본 삭제
               </button>

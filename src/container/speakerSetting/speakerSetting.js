@@ -30,7 +30,7 @@ class SpeakerSetting extends Component {
       .catch((err) => console.log(err));
   };
 
-  addSpeaker = () => {
+  AddSpeakerInputBlock = () => {
     var array = this.state.speakerPopup;
     var Index = this.state.index;
     var plusIndex = Index + 1;
@@ -41,7 +41,7 @@ class SpeakerSetting extends Component {
     });
     console.log(this.state);
   };
-  deleteSpeaker = (index, ip) => {
+  DeleteSpeakerInputBlock = (index, ip) => {
     console.log(index);
     var array = this.state.speakerPopup;
     if (array.length == 1) {
@@ -75,13 +75,13 @@ class SpeakerSetting extends Component {
                 key={index}
                 defaultIp={this.state.defaultIp}
                 length={this.state.length}
-                deleteSpeaker={this.deleteSpeaker}
+                DeleteSpeakerInputBlock={this.DeleteSpeakerInputBlock}
               />
             </div>
           ))}
         </div>
         <div className="speakerAdd">
-          <button className="addButton" onClick={this.addSpeaker}>
+          <button className="addButton" onClick={this.AddSpeakerInputBlock}>
             스피커 추가
           </button>
         </div>

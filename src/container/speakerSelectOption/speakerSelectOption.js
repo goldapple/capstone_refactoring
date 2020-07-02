@@ -15,7 +15,7 @@ class SpeakerSelectOption extends Component {
     this.setState({ speakerIndex: speakerIndexArray });
   }
 
-  speakerIndexChange = (e, i) => {
+  ChangeSpeakerIndex = (e, i) => {
     var tempArray = this.state.speakerIndex;
     tempArray[i] = e.target.value;
     this.setState({ speakerIndex: tempArray });
@@ -27,7 +27,7 @@ class SpeakerSelectOption extends Component {
         <div className="speakerSelectOption">
           <div
             className="speakerSelectOption_background"
-            onClick={() => this.props.nonActive_speakerSelect(this.props.index)}
+            onClick={() => this.props.InactiveRoleSelectState(this.props.index)}
           />
           <form name="spekaer">
             <div className="speakerSelectOption_main">
@@ -37,7 +37,7 @@ class SpeakerSelectOption extends Component {
                   index={index}
                   speaker={this.props.speaker}
                   castPart={i}
-                  speakerIndexChange={this.speakerIndexChange}
+                  ChangeSpeakerIndex={this.ChangeSpeakerIndex}
                 />
               ))}
               <div>
@@ -45,7 +45,7 @@ class SpeakerSelectOption extends Component {
                   type="button"
                   className="saveButton"
                   onClick={() =>
-                    this.props.save_option(this.props.index, this.state)
+                    this.props.SaveRole(this.props.index, this.state)
                   }
                 >
                   설정 완료 / 저장

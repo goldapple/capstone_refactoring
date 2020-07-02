@@ -63,7 +63,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  scriptPlus = () => {
+  AddPlayScript = () => {
     var tempArray = [];
     if (this.state.scriptPlus == true) {
       // 추가 팝업 on인 상태
@@ -77,12 +77,12 @@ class PlayList extends Component {
     }
     this.setState({ scriptPlus: !this.state.scriptPlus });
   };
-  swScript = (index) => {
+  ChangePlayScriptState = (index) => {
     var tempIndex = this.state.checkBox;
     tempIndex[index] = !tempIndex[index];
     this.setState({ checkBox: tempIndex });
   };
-  playerListSave = () => {
+  SavePlayScript = () => {
     var requestTitle = [],
       stateScript = this.state.script,
       stateCheckBox = this.state.checkBox;
@@ -103,7 +103,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  playerListDelete = () => {
+  DeletePlayScript = () => {
     Axios({
       url: `${API()}/playerListDelete`,
       method: "delete",
@@ -115,7 +115,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  checkPlayScript = (e) => {
+  CheckPlayScript = (e) => {
     var tempPlay = this.state.playTarget;
     if (e.target.checked) {
       tempPlay.push(e.target.value);
@@ -126,7 +126,7 @@ class PlayList extends Component {
     }
     console.log(this.state.playTarget);
   };
-  playScript = async () => {
+  StartPlayScript = async () => {
     if (this.state.isRevise) {
       alert("대본 순서 설정 중에는 재생이 불가합니다");
       return 0;
@@ -187,7 +187,7 @@ class PlayList extends Component {
                 });
               }
               console.log(this.state.playTarget);
-              this.playScript();
+              this.StartPlayScript();
             } else {
               this.setState({ nowPlay: "", playTarget: [] });
               for (let index = 0; index < this.state.playList.length; index++)
@@ -217,7 +217,7 @@ class PlayList extends Component {
       this.setState({ isPlay: true, isPause: false });
     }
   };
-  stopScript = () => {
+  StopPlayScript = () => {
     console.log("정지");
     for (let index = 0; index < this.state.playList.length; index++)
       document.getElementsByClassName("checkbox")[index].checked = false;
@@ -236,7 +236,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  pauseScript = () => {
+  PausePlayScript = () => {
     console.log("일시정지");
     this.setState({ isPlay: false, isPause: true });
     Axios({
@@ -248,7 +248,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  prevScript = () => {
+  BackSkipPlayScript = () => {
     console.log("이전 한줄 건너뛰기");
     Axios({
       url: `${API()}/playListprevJump`,
@@ -259,7 +259,7 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  nextScript = () => {
+  SkipPlayScript = () => {
     console.log("이후 한줄 건너뛰기");
     Axios({
       url: `${API()}/playListnextJump`,
@@ -270,18 +270,18 @@ class PlayList extends Component {
       })
       .catch((err) => console.log(err));
   };
-  randomScript = async () => {
+  ChangeRandomPlayState = async () => {
     await this.setState({ isRandom: !this.state.isRandom });
     if (this.state.isRandom) {
       alert("다음 대본을 랜덤으로 실행 합니다.");
     } else alert("랜덤 실행을 하지 않습니다.");
   };
-  setRotate = async () => {
+  ChangeRotatePlayState = async () => {
     await this.setState({ setRotate: !this.state.setRotate });
     if (this.state.setRotate) alert("반복합니다.");
     else alert("반복하지 않습니다.");
   };
-  setRevise = async () => {
+  ChangePlayScriptIndexState = async () => {
     if (this.state.isPlay) {
       alert("대본 재생 중에는 설정 불가 합니다.");
       return 0;
@@ -307,7 +307,7 @@ class PlayList extends Component {
     }
   };
 
-  reviseScriptSave = async (e) => {
+  SetPlayScriptIndex = async (e) => {
     let tempReviseScript = this.state.reviseScript;
     if (tempReviseScript.indexOf(e.target.name) == -1) {
       //순서를 안정한 대본인 경우
@@ -329,7 +329,7 @@ class PlayList extends Component {
         <div>
           {this.state.scriptPlus ? (
             <div className="playList_plus">
-              <div className="script_background" onClick={this.scriptPlus} />
+              <div className="script_background" onClick={this.AddPlayScript} />
               <div className="script_area">
                 <form>
                   {this.state.script.map((index, i) => (
@@ -339,13 +339,13 @@ class PlayList extends Component {
                         <input
                           id={`script` + i}
                           type="checkbox"
-                          onChange={() => this.swScript(i)}
+                          onChange={() => this.ChangePlayScriptState(i)}
                         />
                       </div>
                     </label>
                   ))}
                   <div className="button">
-                    <button type="button" onClick={this.playerListSave}>
+                    <button type="button" onClick={this.SavePlayScript}>
                       확인
                     </button>
                     <button type="button" onClick={this.scriptPlus}>
@@ -373,10 +373,13 @@ class PlayList extends Component {
               <button className="button" onClick={this.scriptPlus}>
                 대본 추가
               </button>
-              <button className="button" onClick={this.playerListDelete}>
+              <button className="button" onClick={this.DeletePlayScript}>
                 대본 삭제
               </button>
-              <button className="button" onClick={this.setRevise}>
+              <button
+                className="button"
+                onClick={this.ChangePlayScriptIndexState}
+              >
                 대본 순서 변경
               </button>
             </div>
@@ -390,7 +393,7 @@ class PlayList extends Component {
                     {this.state.isRevise ? (
                       <input
                         type="text"
-                        onClick={this.reviseScriptSave}
+                        onClick={this.SetPlayScriptIndex}
                         value={
                           this.state.reviseScript.indexOf(index) != -1
                             ? this.state.reviseScript.indexOf(index) + 1
@@ -408,7 +411,7 @@ class PlayList extends Component {
                       type="checkbox"
                       value={index}
                       id={index}
-                      onClick={this.checkPlayScript}
+                      onClick={this.CheckPlayScript}
                     />
                     {index}
                   </div>
@@ -425,46 +428,46 @@ class PlayList extends Component {
               src="img/rotate.png"
               className="bottomImg"
               alt="rotate"
-              onClick={this.setRotate}
+              onClick={this.ChangeRotatePlayState}
             />
             <img
               src="img/randomRotate.png"
               className="bottomImg"
               alt="randomRotate"
-              onClick={this.randomScript}
+              onClick={this.ChangeRandomPlayState}
             />
             <img
               src="img/rewind.png"
               className="bottomImg"
               alt="rewind"
-              onClick={this.prevScript}
+              onClick={this.BackSkipPlayScript}
             />
             {this.state.isPlay ? (
               <img
                 src="img/pause.png"
                 className="bottomImg"
                 alt="play"
-                onClick={this.pauseScript}
+                onClick={this.PausePlayScript}
               />
             ) : (
               <img
                 src="img/play.png"
                 className="bottomImg"
                 alt="play"
-                onClick={this.playScript}
+                onClick={this.StartPlayScript}
               />
             )}
             <img
               src="img/stop.png"
               className="bottomImg"
               alt="stop"
-              onClick={this.stopScript}
+              onClick={this.StopPlayScript}
             />
             <img
               src="img/fastForward.png"
               className="bottomImg"
               alt="fastForward"
-              onClick={this.nextScript}
+              onClick={this.SkipPlayScript}
             />
           </div>
         </div>

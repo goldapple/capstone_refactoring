@@ -7,7 +7,7 @@ const SpeakerSelectOption_main = (props) => {
       <span className="speaker">
         <select
           name="speaker"
-          onChange={(e) => props.speakerIndexChange(e, props.index)}
+          onChange={(e) => props.ChangeSpeakerIndex(e, props.index)}
         >
           <option value="스피커 선택" defaultValue hidden>
             스피커 선택
